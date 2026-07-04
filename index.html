@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Matrimonio | Floricena e Stefano</title>
+
+<link rel="stylesheet" href="style.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+
+
+<!-- Opening screen -->
+<div id="opening-screen" aria-hidden="false">
+  <div class="envelope">
+    <div class="seal">💍</div>
+    <h2>Hai ricevuto un invito speciale.</h2>
+    <button id="openInvite" type="button">Invito aperto</button>
+  </div>
+</div>
+
+<!-- Invitation content -->
+
+<div id="invitation-content" aria-hidden="true">
+  <div class="particles"></div>
+
+  <!-- Música de fundo (edite o src do arquivo) -->
+  <audio id="bgMusic" loop preload="auto">
+    <source src="casamento 1.mp3" type="audio/mpeg">
+  </audio>
+  <button id="musicBtn" type="button" aria-label="Controlar música">🎵 Música</button>
+
+  <section class="hero">
+
+  <video autoplay muted loop playsinline>
+    <source src="videocasal1.mp4" type="video/mp4">
+  </video>
+
+
+  <div class="overlay"></div>
+
+  <div class="hero-content">
+    <span class="subtitle">Insieme per sempre</span>
+
+    <h1>Floricena</h1>
+    <h1>& </h1>
+    <h1>Stefano</h1>
+
+    <p>
+      15 de Novembro de 2026
+    </p>
+
+    <button class="btn" type="button" onclick="window.location.href='confimação.html'">Conferma la tua presenza</button>
+
+
+
+  </div>
+
+  </section>
+
+  <section class="countdown-section">
+
+    <h2>Ne sono rimasti solo pochi</h2>
+
+    <div class="countdown">
+
+      <div>
+        <span id="days">00</span>
+        <p>Giorni</p>
+      </div>
+
+      <div>
+        <span id="hours">00</span>
+        <p>Ore</p>
+      </div>
+
+      <div>
+        <span id="minutes">00</span>
+        <p>Minuti</p>
+      </div>
+
+      <div>
+        <span id="seconds">00</span>
+        <p>Secondi</p>
+      </div>
+
+    </div>
+
+  </section>
+
+  <section class="timeline">
+
+    <h2>Il nostro viaggio</h2>
+
+    <div class="timeline-container">
+
+      <div class="timeline-item">
+        <h3>2021</h3>
+        <p Ci conosciamo.</p>
+      </div>
+
+      <div class="timeline-item">
+        <h3>2023</h3>
+        <p>Primo viaggio insieme.</p>
+      </div>
+
+      <div class="timeline-item">
+        <h3>2025</h3>
+        <p>Proposta di matrimonio.</p>
+      </div>
+
+      <div class="timeline-item">
+        <h3>2026</h3>
+        <p>Il nostro grande giorno.</p>
+      </div>
+
+    </div>
+
+  </section>
+
+  <section class="story">
+
+    <h2>La nostra storia</h2>
+
+    <p>
+Quattro anni fa eravamo solo due sconosciuti al parco Iris di Padova,
+ io con il cane di mia sorella e lui al suo lavoro.
+Dopo innumerevoli passeggiate con il cane e alcuni veri e propri incontri romantici, eccoci qui!
+Speriamo  che possiate unirvi a noi mentre la nostra storia d'amore continua nel prossimo capitolo di
+"Lo voglio!"
+
+
+  </section>
+
+  <section class="gallery">
+
+    <h2>La nostra coppia</h2>
+    <p>La parte migliore della vita inizia ora, al tuo fianco.</p>
+
+    <div class="gallery-grid">
+      <figure class="gallery-item">
+        <img src="casal1.jpeg" alt="Foto do casal 1" loading="lazy">
+      </figure>
+      <figure class="gallery-item">
+        <img src="casal2.jpeg" alt="Foto do casal 2" loading="lazy">
+      </figure>
+      <figure class="gallery-item">
+        <img src="casal3.jpeg" alt="Foto do casal 3" loading="lazy">
+      </figure>
+      <figure class="gallery-item">
+        <img src="casal4.jpeg" alt="Foto do casal 4" loading="lazy">
+      </figure>
+    </div>
+
+  </section>
+
+  <section class="location">
+
+    <h2>Luogo della cerimonia</h2>
+
+    <p>Espaço Jardins Imperiais</p>
+    <p>Rio de Janeiro - RJ</p>
+
+    <button class="btn-outline">
+      Ver Localização
+    </button>
+
+  </section>
+
+
+  <section class="footer">
+
+    <h3>Non vediamo l'ora di celebrare con voi questa giornata indimenticabile. ❤️</h3>
+
+    <p>Con affetto, Florina e Stefano</p>
+
+  </section>
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>

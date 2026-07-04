@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Confirmação de Presença</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --purple:#8b5fbf;
+      --purple2:#7c5aa5;
+      --gold:#d4af37;
+      --green:#25D366;
+      --text:#444;
+      --muted:#666;
+    }
+
+    *{ box-sizing:border-box; margin:0; padding:0; }
+
+    body{
+      margin:0;
+      min-height:100vh;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      background:linear-gradient(135deg,#f8f3ff,#ffffff);
+      font-family:Poppins, sans-serif;
+      color:var(--text);
+      overflow-x:hidden;
+      padding:24px;
+    }
+
+    .card{
+      width:90%;
+      max-width:650px;
+      background:white;
+      border-radius:25px;
+      padding:42px;
+      text-align:center;
+      box-shadow:0 20px 60px rgba(0,0,0,.12);
+      border:1px solid rgba(212,175,55,.25);
+    }
+
+    .icon{
+      font-size:70px;
+      margin-bottom:16px;
+      animation:pulse 2s infinite;
+    }
+
+    @keyframes pulse{
+      50%{ transform:scale(1.08); }
+    }
+
+    h1{
+      color:var(--purple);
+      font-size:42px;
+      line-height:1.1;
+      margin-bottom:10px;
+    }
+
+    p{
+      color:var(--muted);
+      line-height:1.8;
+      margin:20px 0;
+      font-size:16.5px;
+    }
+
+    .btn{
+      display:inline-block;
+      padding:18px 45px;
+      border-radius:50px;
+      font-size:18px;
+      font-weight:700;
+      cursor:pointer;
+      transition:.3s;
+      border:none;
+      text-decoration:none;
+      user-select:none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .btn-primary{
+      background:var(--green);
+      color:#fff;
+      box-shadow:0 15px 30px rgba(37,211,102,.18);
+    }
+
+    .btn-primary:hover{ transform:translateY(-5px); box-shadow:0 15px 30px rgba(37,211,102,.30); }
+
+    .btn-secondary{
+      background:#8f6ab7;
+      color:#fff;
+      margin-top:16px;
+    }
+
+    .btn-secondary:hover{ transform:translateY(-3px); background:#7b57a1; }
+
+    .btn-link{
+      margin-top:18px;
+      background:#ffffff;
+      color:#8f6ab7;
+      border:2px solid rgba(143,106,183,.35);
+    }
+
+    .btn-link:hover{ transform:translateY(-3px); border-color:rgba(143,106,183,.7); }
+
+    /* Modal */
+    #rsvpModal{
+      position:fixed;
+      inset:0;
+      z-index:9999;
+      display:none;
+    }
+
+    #rsvpModal.is-open{ display:block; }
+
+    .overlay{
+      position:absolute;
+      inset:0;
+      background:rgba(0,0,0,.45);
+      backdrop-filter: blur(6px);
+    }
+
+    .modal{
+      position:relative;
+      z-index:1;
+      width:min(720px, 92vw);
+      margin:7vh auto;
+      background:rgba(255,255,255,.96);
+      border:1px solid rgba(212,175,55,.35);
+      border-radius:22px;
+      box-shadow:0 30px 90px rgba(0,0,0,.25);
+      padding:24px;
+      animation:pop .18s ease-out;
+    }
+
+    @keyframes pop{
+      from{ transform:translateY(10px) scale(.98); opacity:.7; }
+      to{ transform:translateY(0) scale(1); opacity:1; }
+    }
+
+    .modal h2{
+      font-size:26px;
+      color:var(--purple2);
+      margin-bottom:18px;
+      text-align:center;
+    }
+
+    .form-grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:12px;
+    }
+
+    .form-grid .full{ grid-column: 1 / -1; }
+
+    label{
+      display:block;
+      font-size:13px;
+      color:#555;
+      margin:10px 0 6px;
+      font-weight:600;
+      letter-spacing:.2px;
+    }
+
+    input, select, textarea{
+      width:100%;
+      border-radius:14px;
+      border:1px solid rgba(0,0,0,.12);
+      padding:12px 12px;
+      outline:none;
+      background:#fff;
+      color:var(--text);
+      font-family:inherit;
+      font-size:14.5px;
+      transition:border-color .15s ease, box-shadow .15s ease;
+    }
+
+    input:focus, select:focus, textarea:focus{
+      border-color:rgba(143,106,183,.7);
+      box-shadow:0 0 0 4px rgba(143,106,183,.12);
+    }
+
+    textarea{ min-height:96px; resize:vertical; }
+
+    .actions{
+      display:flex;
+      gap:12px;
+      margin-top:16px;
+      justify-content:center;
+      flex-wrap:wrap;
+    }
+
+    .actions button{ border:none; }
+
+    .btn-cancel{
+      background:#eef0ff;
+      color:#6f55a2;
+      border:1px solid rgba(111,85,162,.25);
+    }
+
+    .btn-cancel:hover{ transform:translateY(-3px); background:#e7e9ff; }
+
+    .help{
+      margin-top:12px;
+      font-size:12.5px;
+      color:#666;
+      text-align:center;
+      line-height:1.5;
+    }
+
+    .toast{
+      display:none;
+      margin-top:14px;
+      padding:12px 14px;
+      border-radius:14px;
+      background:rgba(37,211,102,.12);
+      color:#1f6f3d;
+      border:1px solid rgba(37,211,102,.25);
+      font-weight:600;
+      text-align:center;
+    }
+
+    @media (max-width:720px){
+      .form-grid{ grid-template-columns: 1fr; }
+      .modal{ margin:4vh auto; padding:18px; }
+      h1{ font-size:34px; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="card" aria-live="polite">
+    <div class="icon">💜</div>
+    <h1>Ficamos muito felizes!</h1>
+
+    <p>
+      Sua presença tornará esse momento ainda mais especial.
+      <br>
+      Clique no botão abaixo para confirmar sua presença.
+    </p>
+
+    <button class="btn btn-primary" type="button" onclick="abrirModal()">💬 Confirmar Presença</button>
+
+    <a
+      class="btn btn-link"
+      href="https://chat.whatsapp.com/SEU_LINK_DO_GRUPO"
+      target="_blank"
+      rel="noopener noreferrer">
+      Entrar no Grupo
+    </a>
+  </div>
+
+  <div id="rsvpModal" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="overlay" onclick="fecharModal()"></div>
+
+    <div class="modal" aria-labelledby="rsvpTitle">
+      <h2 id="rsvpTitle">Confirmação de Presença</h2>
+
+      <div class="form-grid">
+        <div class="full">
+          <label for="nome">Nome completo</label>
+          <input id="nome" type="text" placeholder="Nome completo" autocomplete="name">
+        </div>
+
+        <div class="full">
+          <label for="telefone">Telefone</label>
+          <input id="telefone" type="text" placeholder="Telefone (opcional)" autocomplete="tel">
+        </div>
+
+        <div>
+          <label for="presenca">Você vai?</label>
+          <select id="presenca">
+            <option>Sim</option>
+            <option>Não</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="acompanhantes">Acompanhantes</label>
+          <input id="acompanhantes" type="number" min="0" value="0" placeholder="Quantidade de acompanhantes">
+        </div>
+
+        <div class="full">
+          <label for="nomesAcompanhantes">Nomes dos acompanhantes</label>
+          <textarea id="nomesAcompanhantes" placeholder="Nome dos acompanhantes (se houver)"></textarea>
+        </div>
+
+        <div class="full">
+          <label for="obs">Observações</label>
+          <textarea id="obs" placeholder="Observações (alergias, horários, etc.)"></textarea>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btn btn-primary" type="button" onclick="enviarWhatsapp()">Confirmar</button>
+        <button class="btn btn-cancel" type="button" onclick="fecharModal()">Cancelar</button>
+      </div>
+
+      <div class="toast" id="toastOk">Enviando...</div>
+
+      <div class="help">
+        Ao confirmar, abriremos o WhatsApp com a sua mensagem preenchida.
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // WhatsApp: telefone de destino recebido: +39 380 774 9633
+    // Formatar para wa.me => remover + e espaços
+    const WHATSAPP_DEST = '393807749633';
+    const WA_ME_URL = `https://wa.me/${WHATSAPP_DEST}`;
+
+    const modalEl = document.getElementById('rsvpModal');
+    const toastOkEl = document.getElementById('toastOk');
+
+    function abrirModal(){
+      if(!modalEl) return;
+      modalEl.classList.add('is-open');
+      modalEl.setAttribute('aria-hidden','false');
+      setTimeout(() => {
+        const input = document.getElementById('nome');
+        if(input) input.focus();
+      }, 50);
+    }
+
+    function fecharModal(){
+      if(!modalEl) return;
+      modalEl.classList.remove('is-open');
+      modalEl.setAttribute('aria-hidden','true');
+    }
+
+    function getValue(id){
+      const el = document.getElementById(id);
+      return (el && typeof el.value === 'string') ? el.value.trim() : (el ? String(el.value).trim() : '');
+    }
+
+    function getSelectValue(id){
+      const el = document.getElementById(id);
+      return el ? String(el.value).trim() : '';
+    }
+
+    function enviarWhatsapp(){
+      const nome = getValue('nome');
+      const telefone = getValue('telefone');
+      const presenca = getSelectValue('presenca');
+      const acompanhantes = (function(){
+        const el = document.getElementById('acompanhantes');
+        const n = el ? Number(el.value) : 0;
+        return Number.isFinite(n) ? n : 0;
+      })();
+      const nomesAcompanhantes = getValue('nomesAcompanhantes');
+      const obs = getValue('obs');
+
+      if(!nome){
+        alert('Informe seu nome completo para confirmar.');
+        const n = document.getElementById('nome');
+        if(n) n.focus();
+        return;
+      }
+
+      const msg = [
+        'Olá! Gostaria de confirmar presença no casamento.',
+        '',
+        `Nome: ${nome}`,
+        `Telefone: ${telefone || '-'}`,
+        `Presença: ${presenca || '-'}`,
+        `Acompanhantes: ${acompanhantes}`,
+        `Nomes dos acompanhantes: ${nomesAcompanhantes || '-'}`,
+        `Observações: ${obs || '-'}`
+      ].join('\n');
+
+      const url = `${WA_ME_URL}?text=${encodeURIComponent(msg)}`;
+
+      if(toastOkEl){
+        toastOkEl.style.display = 'block';
+        toastOkEl.textContent = 'Abrindo WhatsApp...';
+      }
+
+      window.open(url, '_blank', 'noopener,noreferrer');
+      fecharModal();
+    }
+
+    // Fechar com ESC
+    document.addEventListener('keydown', (e) => {
+      if(e.key === 'Escape') fecharModal();
+    });
+  </script>
+</body>
+</html>
+
