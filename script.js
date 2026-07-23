@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // CONTAGEM REGRESSIVA
 
-const weddingDate = new Date("Nov 15, 2026 18:00:00").getTime();
+const weddingDate = new Date("Oct 10, 2026 12:30:00").getTime();
 
 
 setInterval(() => {
