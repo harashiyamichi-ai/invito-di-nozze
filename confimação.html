@@ -6,235 +6,405 @@
   <title>Confirmação de Presença</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
-    :root{
-      --purple:#8b5fbf;
-      --purple2:#7c5aa5;
-      --gold:#d4af37;
-      --green:#25D366;
-      --text:#444;
-      --muted:#666;
+    /* ======= VARIÁVEIS ======= */
+    :root {
+      --black: #0a0a0a;
+      --dark: #0d0d0d;
+      --dark-card: #1a1a2e;
+      --purple: #8f6ab7;
+      --purple2: #7c5aa5;
+      --purple-light: #c8a8e8;
+      --gold: #d4af37;
+      --gold-dark: #c5a030;
+      --white: #ffffff;
+      --text-light: #f0e6ff;
+      --text-muted: #c0b0d0;
+      --border-gold: rgba(212, 175, 55, 0.25);
+      --shadow-gold: rgba(212, 175, 55, 0.15);
     }
 
-    *{ box-sizing:border-box; margin:0; padding:0; }
+    /* ======= RESET ======= */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
-    body{
-      margin:0;
-      min-height:100vh;
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      background:linear-gradient(135deg,#f8f3ff,#ffffff);
-      font-family:Poppins, sans-serif;
-      color:var(--text);
-      overflow-x:hidden;
-      padding:24px;
+    /* ======= BODY ======= */
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: var(--black);
+      font-family: 'Poppins', sans-serif;
+      color: var(--text-light);
+      overflow-x: hidden;
+      padding: clamp(12px, 3vw, 24px);
+      background-image: radial-gradient(ellipse at 50% 0%, rgba(143, 106, 183, 0.08) 0%, transparent 70%);
     }
 
-    .card{
-      width:90%;
-      max-width:650px;
-      background:white;
-      border-radius:25px;
-      padding:42px;
-      text-align:center;
-      box-shadow:0 20px 60px rgba(0,0,0,.12);
-      border:1px solid rgba(212,175,55,.25);
+    /* ======= CARD ======= */
+    .card {
+      width: min(92%, 650px);
+      background: var(--dark-card);
+      border-radius: clamp(18px, 3vw, 25px);
+      padding: clamp(24px, 5vw, 48px) clamp(20px, 4vw, 42px);
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 40px var(--shadow-gold);
+      border: 1px solid var(--border-gold);
+      transition: all 0.3s ease;
     }
 
-    .icon{
-      font-size:70px;
-      margin-bottom:16px;
-      animation:pulse 2s infinite;
+    .icon {
+      font-size: clamp(48px, 10vw, 70px);
+      margin-bottom: clamp(10px, 2vw, 16px);
+      animation: pulse 2s infinite;
+      display: block;
     }
 
-    @keyframes pulse{
-      50%{ transform:scale(1.08); }
+    @keyframes pulse {
+      50% { transform: scale(1.08); }
     }
 
-    h1{
-      color:var(--purple);
-      font-size:42px;
-      line-height:1.1;
-      margin-bottom:10px;
+    h1 {
+      font-family: 'Cormorant Garamond', serif;
+      color: var(--purple-light);
+      font-size: clamp(28px, 6vw, 44px);
+      line-height: 1.15;
+      margin-bottom: 8px;
+      font-weight: 700;
+      text-shadow: 0 2px 20px rgba(200, 168, 232, 0.15);
     }
 
-    p{
-      color:var(--muted);
-      line-height:1.8;
-      margin:20px 0;
-      font-size:16.5px;
+    p {
+      color: var(--text-muted);
+      line-height: 1.8;
+      margin: clamp(14px, 3vw, 22px) 0;
+      font-size: clamp(14px, 2.2vw, 16.5px);
     }
 
-    .btn{
-      display:inline-block;
-      padding:18px 45px;
-      border-radius:50px;
-      font-size:18px;
-      font-weight:700;
-      cursor:pointer;
-      transition:.3s;
-      border:none;
-      text-decoration:none;
-      user-select:none;
+    /* ======= BOTÕES ======= */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: clamp(14px, 2.5vw, 18px) clamp(28px, 5vw, 45px);
+      border-radius: 50px;
+      font-size: clamp(14px, 2vw, 18px);
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: none;
+      text-decoration: none;
+      user-select: none;
       -webkit-tap-highlight-color: transparent;
+      letter-spacing: 0.3px;
+      outline: none;
     }
 
-    .btn-primary{
-      background:var(--green);
-      color:#fff;
-      box-shadow:0 15px 30px rgba(37,211,102,.18);
+    .btn:active {
+      transform: scale(0.97);
     }
 
-    .btn-primary:hover{ transform:translateY(-5px); box-shadow:0 15px 30px rgba(37,211,102,.30); }
-
-    .btn-secondary{
-      background:#8f6ab7;
-      color:#fff;
-      margin-top:16px;
+    .btn-primary {
+      background: var(--gold);
+      color: var(--black);
+      box-shadow: 0 10px 30px rgba(212, 175, 55, 0.25);
     }
 
-    .btn-secondary:hover{ transform:translateY(-3px); background:#7b57a1; }
-
-    .btn-link{
-      margin-top:18px;
-      background:#ffffff;
-      color:#8f6ab7;
-      border:2px solid rgba(143,106,183,.35);
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      background: var(--gold-dark);
+      box-shadow: 0 15px 35px rgba(212, 175, 55, 0.35);
     }
 
-    .btn-link:hover{ transform:translateY(-3px); border-color:rgba(143,106,183,.7); }
-
-    /* Modal */
-    #rsvpModal{
-      position:fixed;
-      inset:0;
-      z-index:9999;
-      display:none;
+    .btn-secondary {
+      background: var(--purple2);
+      color: var(--white);
+      margin-top: 14px;
     }
 
-    #rsvpModal.is-open{ display:block; }
-
-    .overlay{
-      position:absolute;
-      inset:0;
-      background:rgba(0,0,0,.45);
-      backdrop-filter: blur(6px);
+    .btn-secondary:hover {
+      transform: translateY(-3px);
+      background: var(--purple);
     }
 
-    .modal{
-      position:relative;
-      z-index:1;
-      width:min(720px, 92vw);
-      margin:7vh auto;
-      background:rgba(255,255,255,.96);
-      border:1px solid rgba(212,175,55,.35);
-      border-radius:22px;
-      box-shadow:0 30px 90px rgba(0,0,0,.25);
-      padding:24px;
-      animation:pop .18s ease-out;
+    .btn-link {
+      margin-top: 18px;
+      background: transparent;
+      color: var(--gold);
+      border: 2px solid var(--border-gold);
     }
 
-    @keyframes pop{
-      from{ transform:translateY(10px) scale(.98); opacity:.7; }
-      to{ transform:translateY(0) scale(1); opacity:1; }
+    .btn-link:hover {
+      transform: translateY(-3px);
+      border-color: var(--gold);
+      background: rgba(212, 175, 55, 0.08);
     }
 
-    .modal h2{
-      font-size:26px;
-      color:var(--purple2);
-      margin-bottom:18px;
-      text-align:center;
+    .btn-cancel {
+      background: rgba(143, 106, 183, 0.15);
+      color: var(--purple-light);
+      border: 1px solid rgba(200, 168, 232, 0.25);
     }
 
-    .form-grid{
-      display:grid;
+    .btn-cancel:hover {
+      transform: translateY(-3px);
+      background: rgba(143, 106, 183, 0.25);
+    }
+
+    /* ======= MODAL ======= */
+    #rsvpModal {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      display: none;
+    }
+
+    #rsvpModal.is-open {
+      display: block;
+    }
+
+    .overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+
+    .modal {
+      position: relative;
+      z-index: 1;
+      width: min(720px, 94vw);
+      margin: clamp(3vh, 5vh, 8vh) auto;
+      background: var(--dark-card);
+      border: 1px solid var(--border-gold);
+      border-radius: clamp(16px, 3vw, 22px);
+      box-shadow: 0 30px 90px rgba(0, 0, 0, 0.5), 0 0 30px var(--shadow-gold);
+      padding: clamp(16px, 3vw, 28px);
+      animation: pop 0.18s ease-out;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .modal::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .modal::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .modal::-webkit-scrollbar-thumb {
+      background: var(--purple2);
+      border-radius: 10px;
+    }
+
+    @keyframes pop {
+      from { transform: translateY(10px) scale(0.98); opacity: 0.7; }
+      to { transform: translateY(0) scale(1); opacity: 1; }
+    }
+
+    .modal h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(22px, 4vw, 30px);
+      color: var(--purple-light);
+      margin-bottom: 18px;
+      text-align: center;
+      font-weight: 700;
+    }
+
+    /* ======= FORMULÁRIO ======= */
+    .form-grid {
+      display: grid;
       grid-template-columns: 1fr 1fr;
-      gap:12px;
+      gap: clamp(10px, 2vw, 14px);
     }
 
-    .form-grid .full{ grid-column: 1 / -1; }
+    .form-grid .full { grid-column: 1 / -1; }
 
-    label{
-      display:block;
-      font-size:13px;
-      color:#555;
-      margin:10px 0 6px;
-      font-weight:600;
-      letter-spacing:.2px;
+    label {
+      display: block;
+      font-size: clamp(12px, 1.8vw, 14px);
+      color: var(--purple-light);
+      margin: 8px 0 5px;
+      font-weight: 600;
+      letter-spacing: 0.2px;
     }
 
-    input, select, textarea{
-      width:100%;
-      border-radius:14px;
-      border:1px solid rgba(0,0,0,.12);
-      padding:12px 12px;
-      outline:none;
-      background:#fff;
-      color:var(--text);
-      font-family:inherit;
-      font-size:14.5px;
-      transition:border-color .15s ease, box-shadow .15s ease;
+    input,
+    select,
+    textarea {
+      width: 100%;
+      border-radius: 14px;
+      border: 1px solid rgba(200, 168, 232, 0.15);
+      padding: clamp(10px, 2vw, 14px) clamp(10px, 2vw, 14px);
+      outline: none;
+      background: rgba(10, 10, 10, 0.6);
+      color: var(--text-light);
+      font-family: inherit;
+      font-size: clamp(13px, 2vw, 15px);
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
     }
 
-    input:focus, select:focus, textarea:focus{
-      border-color:rgba(143,106,183,.7);
-      box-shadow:0 0 0 4px rgba(143,106,183,.12);
+    input::placeholder,
+    textarea::placeholder {
+      color: rgba(200, 168, 232, 0.3);
     }
 
-    textarea{ min-height:96px; resize:vertical; }
-
-    .actions{
-      display:flex;
-      gap:12px;
-      margin-top:16px;
-      justify-content:center;
-      flex-wrap:wrap;
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.15);
     }
 
-    .actions button{ border:none; }
-
-    .btn-cancel{
-      background:#eef0ff;
-      color:#6f55a2;
-      border:1px solid rgba(111,85,162,.25);
+    select {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23d4af37' d='M6 8L0 0h12z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      padding-right: 32px;
+      cursor: pointer;
     }
 
-    .btn-cancel:hover{ transform:translateY(-3px); background:#e7e9ff; }
-
-    .help{
-      margin-top:12px;
-      font-size:12.5px;
-      color:#666;
-      text-align:center;
-      line-height:1.5;
+    select option {
+      background: var(--dark-card);
+      color: var(--text-light);
     }
 
-    .toast{
-      display:none;
-      margin-top:14px;
-      padding:12px 14px;
-      border-radius:14px;
-      background:rgba(37,211,102,.12);
-      color:#1f6f3d;
-      border:1px solid rgba(37,211,102,.25);
-      font-weight:600;
-      text-align:center;
+    textarea {
+      min-height: clamp(80px, 12vw, 96px);
+      resize: vertical;
     }
 
-    @media (max-width:720px){
-      .form-grid{ grid-template-columns: 1fr; }
-      .modal{ margin:4vh auto; padding:18px; }
-      h1{ font-size:34px; }
+    /* ======= AÇÕES ======= */
+    .actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 18px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .actions button { border: none; }
+
+    /* ======= TOAST ======= */
+    .toast {
+      display: none;
+      margin-top: 14px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      background: rgba(212, 175, 55, 0.1);
+      color: var(--gold);
+      border: 1px solid var(--border-gold);
+      font-weight: 600;
+      text-align: center;
+      font-size: clamp(13px, 2vw, 14px);
+    }
+
+    .help {
+      margin-top: 12px;
+      font-size: clamp(11px, 1.8vw, 12.5px);
+      color: var(--text-muted);
+      text-align: center;
+      line-height: 1.5;
+      opacity: 0.8;
+    }
+
+    /* ============================================
+       RESPONSIVO — BREAKPOINTS
+       ============================================ */
+
+    /* Tablets & Telas Médias (≤ 1024px) */
+    @media (max-width: 1024px) {
+      body { padding: 20px; }
+      .modal { margin: 5vh auto; }
+    }
+
+    /* ≤ 900px */
+    @media (max-width: 900px) {
+      .form-grid { grid-template-columns: 1fr; }
+      .modal { padding: 20px; }
+    }
+
+    /* ≤ 768px */
+    @media (max-width: 768px) {
+      body { padding: 16px; }
+      .card { padding: 28px 18px; }
+      .modal { padding: 18px; margin: 3vh auto; max-height: 92vh; }
+      .form-grid { gap: 8px; }
+      .actions { flex-direction: column; align-items: stretch; }
+      .actions .btn { width: 100%; justify-content: center; }
+    }
+
+    /* ≤ 600px */
+    @media (max-width: 600px) {
+      body { padding: 12px; }
+      .card { padding: 24px 16px; border-radius: 18px; }
+      .modal { padding: 14px; border-radius: 16px; margin: 2vh auto; }
+      .modal h2 { font-size: 22px; }
+      label { font-size: 13px; }
+      .help { font-size: 11px; }
+      .toast { font-size: 13px; }
+    }
+
+    /* ≤ 480px (smartphones médios) */
+    @media (max-width: 480px) {
+      body { padding: 10px; }
+      .card { padding: 20px 14px; border-radius: 16px; }
+      .card h1 { font-size: 26px; }
+      .card p { font-size: 14px; }
+      .btn { 
+        padding: 13px 24px; 
+        font-size: 14px; 
+        width: 100%;
+        justify-content: center;
+      }
+      .btn-link { margin-top: 12px; }
+      .modal { padding: 12px; border-radius: 14px; }
+      .modal h2 { font-size: 20px; }
+      input, select, textarea { 
+        padding: 10px;
+        font-size: 14px;
+        border-radius: 12px;
+      }
+      textarea { min-height: 72px; }
+      .actions { gap: 10px; margin-top: 14px; }
+    }
+
+    /* ≤ 380px (smartphones pequenos) */
+    @media (max-width: 380px) {
+      body { padding: 8px; }
+      .card { padding: 16px 10px; border-radius: 14px; }
+      .card h1 { font-size: 22px; }
+      .card p { font-size: 13px; line-height: 1.7; }
+      .btn { 
+        padding: 11px 18px; 
+        font-size: 13px; 
+      }
+      .modal { padding: 10px; }
+      .modal h2 { font-size: 18px; }
+      input, select, textarea { 
+        padding: 9px;
+        font-size: 13px;
+        border-radius: 10px;
+      }
+      label { font-size: 12px; }
+      .help { font-size: 10.5px; }
+      .toast { font-size: 12px; padding: 10px; }
+      .icon { font-size: 42px; }
+      .actions { gap: 8px; margin-top: 12px; }
     }
   </style>
 </head>
 
 <body>
   <div class="card" aria-live="polite">
-    <div class="icon">💜</div>
+    <span class="icon">💜</span>
     <h1>Ficamos muito felizes!</h1>
 
     <p>
@@ -310,44 +480,48 @@
 
   <script>
     // WhatsApp: telefone de destino recebido: +39 380 774 9633
-    // Formatar para wa.me => remover + e espaços
     const WHATSAPP_DEST = '393807749633';
     const WA_ME_URL = `https://wa.me/${WHATSAPP_DEST}`;
 
     const modalEl = document.getElementById('rsvpModal');
     const toastOkEl = document.getElementById('toastOk');
 
-    function abrirModal(){
-      if(!modalEl) return;
+    function abrirModal() {
+      if (!modalEl) return;
       modalEl.classList.add('is-open');
-      modalEl.setAttribute('aria-hidden','false');
+      modalEl.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
       setTimeout(() => {
         const input = document.getElementById('nome');
-        if(input) input.focus();
-      }, 50);
+        if (input) input.focus();
+      }, 100);
     }
 
-    function fecharModal(){
-      if(!modalEl) return;
+    function fecharModal() {
+      if (!modalEl) return;
       modalEl.classList.remove('is-open');
-      modalEl.setAttribute('aria-hidden','true');
+      modalEl.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      if (toastOkEl) {
+        toastOkEl.style.display = 'none';
+      }
     }
 
-    function getValue(id){
+    function getValue(id) {
       const el = document.getElementById(id);
       return (el && typeof el.value === 'string') ? el.value.trim() : (el ? String(el.value).trim() : '');
     }
 
-    function getSelectValue(id){
+    function getSelectValue(id) {
       const el = document.getElementById(id);
       return el ? String(el.value).trim() : '';
     }
 
-    function enviarWhatsapp(){
+    function enviarWhatsapp() {
       const nome = getValue('nome');
       const telefone = getValue('telefone');
       const presenca = getSelectValue('presenca');
-      const acompanhantes = (function(){
+      const acompanhantes = (function() {
         const el = document.getElementById('acompanhantes');
         const n = el ? Number(el.value) : 0;
         return Number.isFinite(n) ? n : 0;
@@ -355,10 +529,10 @@
       const nomesAcompanhantes = getValue('nomesAcompanhantes');
       const obs = getValue('obs');
 
-      if(!nome){
+      if (!nome) {
         alert('Informe seu nome completo para confirmar.');
         const n = document.getElementById('nome');
-        if(n) n.focus();
+        if (n) n.focus();
         return;
       }
 
@@ -375,7 +549,7 @@
 
       const url = `${WA_ME_URL}?text=${encodeURIComponent(msg)}`;
 
-      if(toastOkEl){
+      if (toastOkEl) {
         toastOkEl.style.display = 'block';
         toastOkEl.textContent = 'Abrindo WhatsApp...';
       }
@@ -384,9 +558,14 @@
       fecharModal();
     }
 
+    // Fechar ao clicar fora no overlay
+    document.addEventListener('click', function(e) {
+      if (e.target === modalEl) fecharModal();
+    });
+
     // Fechar com ESC
     document.addEventListener('keydown', (e) => {
-      if(e.key === 'Escape') fecharModal();
+      if (e.key === 'Escape') fecharModal();
     });
   </script>
 </body>
