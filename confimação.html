@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="it">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -82,6 +82,20 @@
       line-height: 1.8;
       margin: clamp(14px, 3vw, 22px) 0;
       font-size: clamp(14px, 2.2vw, 16.5px);
+    }
+
+    .deadline-badge {
+      display: inline-block;
+      margin-top: 10px;
+      margin-bottom: 16px;
+      padding: 8px 16px;
+      background: rgba(212, 175, 55, 0.12);
+      border: 1px solid var(--border-gold);
+      border-radius: 30px;
+      color: var(--gold);
+      font-size: clamp(13px, 2vw, 15px);
+      font-weight: 600;
+      letter-spacing: 0.3px;
     }
 
     /* ======= BOTÕES ======= */
@@ -212,9 +226,17 @@
       font-family: 'Cormorant Garamond', serif;
       font-size: clamp(22px, 4vw, 30px);
       color: var(--purple-light);
-      margin-bottom: 18px;
+      margin-bottom: 8px;
       text-align: center;
       font-weight: 700;
+    }
+
+    .modal-subtitle {
+      text-align: center;
+      color: var(--gold);
+      font-size: clamp(13px, 2vw, 14.5px);
+      margin-bottom: 20px;
+      font-weight: 500;
     }
 
     /* ======= FORMULÁRIO ======= */
@@ -241,7 +263,7 @@
       width: 100%;
       border-radius: 14px;
       border: 1px solid rgba(200, 168, 232, 0.15);
-      padding: clamp(10px, 2vw, 14px) clamp(10px, 2vw, 14px);
+      padding: clamp(10px, 2vw, 14px);
       outline: none;
       background: rgba(10, 10, 10, 0.6);
       color: var(--text-light);
@@ -316,22 +338,19 @@
     }
 
     /* ============================================
-       RESPONSIVO — BREAKPOINTS
-       ============================================ */
+        RESPONSIVO — BREAKPOINTS
+        ============================================ */
 
-    /* Tablets & Telas Médias (≤ 1024px) */
     @media (max-width: 1024px) {
       body { padding: 20px; }
       .modal { margin: 5vh auto; }
     }
 
-    /* ≤ 900px */
     @media (max-width: 900px) {
       .form-grid { grid-template-columns: 1fr; }
       .modal { padding: 20px; }
     }
 
-    /* ≤ 768px */
     @media (max-width: 768px) {
       body { padding: 16px; }
       .card { padding: 28px 18px; }
@@ -341,7 +360,6 @@
       .actions .btn { width: 100%; justify-content: center; }
     }
 
-    /* ≤ 600px */
     @media (max-width: 600px) {
       body { padding: 12px; }
       .card { padding: 24px 16px; border-radius: 18px; }
@@ -352,7 +370,6 @@
       .toast { font-size: 13px; }
     }
 
-    /* ≤ 480px (smartphones médios) */
     @media (max-width: 480px) {
       body { padding: 10px; }
       .card { padding: 20px 14px; border-radius: 16px; }
@@ -376,7 +393,6 @@
       .actions { gap: 10px; margin-top: 14px; }
     }
 
-    /* ≤ 380px (smartphones pequenos) */
     @media (max-width: 380px) {
       body { padding: 8px; }
       .card { padding: 16px 10px; border-radius: 14px; }
@@ -405,21 +421,25 @@
 <body>
   <div class="card" aria-live="polite">
     <span class="icon">💜</span>
-    <h1>Siamo felicissimi di convidare quessto giorno con voi!</h1>
+    <h1>Siamo felicissimi di condividere questo giorno con voi!</h1>
 
     <p>
       La vostra presenza renderà questo momento ancora più speciale.
       <br>Clicca sul pulsante qui sotto per confermare la tua presenza.
     </p>
 
-    <button class="btn btn-primary" type="button" onclick="abrirModal()">💬 Conferma di partecipazione</button>
+    <div class="deadline-badge">⏳ Conferma la presenza entro il 20 settembre!</div>
+
+    <div>
+      <button class="btn btn-primary" type="button" onclick="abrirModal()">💬 Conferma di partecipazione</button>
+    </div>
 
     <a
       class="btn btn-link"
       href="https://chat.whatsapp.com/LSDBAESwD82Ik6J1IVHqm6"
       target="_blank"
       rel="noopener noreferrer">
-     Unisciti al gruppo
+      Unisciti al gruppo
     </a>
   </div>
 
@@ -428,11 +448,12 @@
 
     <div class="modal" aria-labelledby="rsvpTitle">
       <h2 id="rsvpTitle">Si prega di confermare la presenza</h2>
+      <div class="modal-subtitle">📅 Conferma la presenza entro il 20 settembre!</div>
 
       <div class="form-grid">
         <div class="full">
           <label for="nome">Nome e cognome</label>
-          <input id="nome" type="text" placeholder="Nome e cognome autocomplete="name">
+          <input id="nome" type="text" placeholder="Nome e cognome" autocomplete="name">
         </div>
 
         <div class="full">
@@ -450,7 +471,7 @@
 
         <div>
           <label for="acompanhantes">Compagni</label>
-          <input id="acompanhantes" type="number" min="0" value="0" placeholder="Numero di accompagnatori>
+          <input id="acompanhantes" type="number" min="0" value="0" placeholder="Numero di accompagnatori">
         </div>
 
         <div class="full">
@@ -460,7 +481,7 @@
 
         <div class="full">
           <label for="obs">Note</label>
-          <textarea id="obs" placeholder="Observações (alergias, horários, etc.)"></textarea>
+          <textarea id="obs" placeholder="Note (allergie, orari, ecc.)"></textarea>
         </div>
       </div>
 
@@ -469,7 +490,7 @@
         <button class="btn btn-cancel" type="button" onclick="fecharModal()">Cancellare</button>
       </div>
 
-        <div class="toast" id="toastOk">Enviando...</div>
+      <div class="toast" id="toastOk">Invio in corso...</div>
 
       <div class="help">
         Dopo la conferma, apriremo WhatsApp con il tuo messaggio già compilato.
@@ -529,28 +550,28 @@
       const obs = getValue('obs');
 
       if (!nome) {
-        alert('Inserisci il tuo nome e cognome per confermare..');
+        alert('Inserisci il tuo nome e cognome per confermare.');
         const n = document.getElementById('nome');
         if (n) n.focus();
         return;
       }
 
       const msg = [
-        'Inserisci il tuo nome e cognome per confermare.',
+        'Conferma di partecipazione:',
         '',
         `Nome: ${nome}`,
         `Telefono: ${telefone || '-'}`,
         `Presenza: ${presenca || '-'}`,
         `Compagni: ${acompanhantes}`,
         `Nomi degli accompagnatori: ${nomesAcompanhantes || '-'}`,
-        `Observaçõe: ${obs || '-'}`
+        `Note: ${obs || '-'}`
       ].join('\n');
 
       const url = `${WA_ME_URL}?text=${encodeURIComponent(msg)}`;
 
       if (toastOkEl) {
         toastOkEl.style.display = 'block';
-        toastOkEl.textContent = 'Abrindo WhatsApp...';
+        toastOkEl.textContent = 'Apertura di WhatsApp...';
       }
 
       window.open(url, '_blank', 'noopener,noreferrer');
@@ -569,4 +590,3 @@
   </script>
 </body>
 </html>
-
