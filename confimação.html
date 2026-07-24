@@ -405,22 +405,21 @@
 <body>
   <div class="card" aria-live="polite">
     <span class="icon">💜</span>
-    <h1>Ficamos muito felizes!</h1>
+    <h1>Eravamo molto felici.!</h1>
 
     <p>
-      Sua presença tornará esse momento ainda mais especial.
-      <br>
-      Clique no botão abaixo para confirmar sua presença.
+      La vostra presenza renderà questo momento ancora più speciale.
+      <br>Clicca sul pulsante qui sotto per confermare la tua presenza.
     </p>
 
-    <button class="btn btn-primary" type="button" onclick="abrirModal()">💬 Confirmar Presença</button>
+    <button class="btn btn-primary" type="button" onclick="abrirModal()">💬 Conferma di partecipazione</button>
 
     <a
       class="btn btn-link"
-      href="https://chat.whatsapp.com/SEU_LINK_DO_GRUPO"
+      href="https://chat.whatsapp.com/LSDBAESwD82Ik6J1IVHqm6"
       target="_blank"
       rel="noopener noreferrer">
-      Entrar no Grupo
+     Unisciti al gruppo
     </a>
   </div>
 
@@ -428,52 +427,52 @@
     <div class="overlay" onclick="fecharModal()"></div>
 
     <div class="modal" aria-labelledby="rsvpTitle">
-      <h2 id="rsvpTitle">Confirmação de Presença</h2>
+      <h2 id="rsvpTitle">Si prega di confermare la presenza</h2>
 
       <div class="form-grid">
         <div class="full">
-          <label for="nome">Nome completo</label>
-          <input id="nome" type="text" placeholder="Nome completo" autocomplete="name">
+          <label for="nome">Nome e cognome</label>
+          <input id="nome" type="text" placeholder="Nome e cognome autocomplete="name">
         </div>
 
         <div class="full">
-          <label for="telefone">Telefone</label>
-          <input id="telefone" type="text" placeholder="Telefone (opcional)" autocomplete="tel">
+          <label for="telefone">Telefono</label>
+          <input id="telefone" type="text" placeholder="Telefono (opzionale)" autocomplete="tel">
         </div>
 
         <div>
-          <label for="presenca">Você vai?</label>
+          <label for="presenca">Stai andando?</label>
           <select id="presenca">
-            <option>Sim</option>
-            <option>Não</option>
+            <option>Sì</option>
+            <option>No</option>
           </select>
         </div>
 
         <div>
-          <label for="acompanhantes">Acompanhantes</label>
-          <input id="acompanhantes" type="number" min="0" value="0" placeholder="Quantidade de acompanhantes">
+          <label for="acompanhantes">Compagni</label>
+          <input id="acompanhantes" type="number" min="0" value="0" placeholder="Numero di accompagnatori>
         </div>
 
         <div class="full">
-          <label for="nomesAcompanhantes">Nomes dos acompanhantes</label>
-          <textarea id="nomesAcompanhantes" placeholder="Nome dos acompanhantes (se houver)"></textarea>
+          <label for="nomesAcompanhantes">Nomi degli accompagnatori</label>
+          <textarea id="nomesAcompanhantes" placeholder="Nomi degli accompagnatori (se presenti)"></textarea>
         </div>
 
         <div class="full">
-          <label for="obs">Observações</label>
+          <label for="obs">Note</label>
           <textarea id="obs" placeholder="Observações (alergias, horários, etc.)"></textarea>
         </div>
       </div>
 
       <div class="actions">
-        <button class="btn btn-primary" type="button" onclick="enviarWhatsapp()">Confirmar</button>
-        <button class="btn btn-cancel" type="button" onclick="fecharModal()">Cancelar</button>
+        <button class="btn btn-primary" type="button" onclick="enviarWhatsapp()">Confermare</button>
+        <button class="btn btn-cancel" type="button" onclick="fecharModal()">Cancellare</button>
       </div>
 
-      <div class="toast" id="toastOk">Enviando...</div>
+        <div class="toast" id="toastOk">Enviando...</div>
 
       <div class="help">
-        Ao confirmar, abriremos o WhatsApp com a sua mensagem preenchida.
+        Dopo la conferma, apriremo WhatsApp con il tuo messaggio già compilato.
       </div>
     </div>
   </div>
@@ -530,21 +529,21 @@
       const obs = getValue('obs');
 
       if (!nome) {
-        alert('Informe seu nome completo para confirmar.');
+        alert('Inserisci il tuo nome e cognome per confermare..');
         const n = document.getElementById('nome');
         if (n) n.focus();
         return;
       }
 
       const msg = [
-        'Olá! Gostaria de confirmar presença no casamento.',
+        'Inserisci il tuo nome e cognome per confermare.',
         '',
         `Nome: ${nome}`,
-        `Telefone: ${telefone || '-'}`,
-        `Presença: ${presenca || '-'}`,
-        `Acompanhantes: ${acompanhantes}`,
-        `Nomes dos acompanhantes: ${nomesAcompanhantes || '-'}`,
-        `Observações: ${obs || '-'}`
+        `Telefono: ${telefone || '-'}`,
+        `Presenza: ${presenca || '-'}`,
+        `Compagni: ${acompanhantes}`,
+        `Nomi degli accompagnatori: ${nomesAcompanhantes || '-'}`,
+        `Observaçõe: ${obs || '-'}`
       ].join('\n');
 
       const url = `${WA_ME_URL}?text=${encodeURIComponent(msg)}`;
