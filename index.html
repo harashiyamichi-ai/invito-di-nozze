@@ -8,11 +8,59 @@
 <link rel="stylesheet" href="style.css">
 
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+  /* Animação e estilo da indicação de Scroll no topo */
+  .scroll-indicator {
+    margin-top: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    color: #ffffff;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    opacity: 0.9;
+    cursor: pointer;
+  }
+
+  .scroll-arrow {
+    font-size: 1.4rem;
+    animation: bounce 2s infinite;
+  }
+
+  @keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+      transform: translateY(0);
+    }
+    40% {
+      transform: translateY(8px);
+    }
+    60% {
+      transform: translateY(4px);
+    }
+  }
+
+  /* Seção de RSVP ao final */
+  .rsvp-section {
+    text-align: center;
+    padding: 60px 20px;
+    background-color: rgba(255, 255, 255, 0.03);
+  }
+
+  .rsvp-section h2 {
+    margin-bottom: 10px;
+  }
+
+  .rsvp-section p {
+    margin-bottom: 25px;
+    opacity: 0.85;
+  }
+</style>
 </head>
 
 <body>
-
-
 
 <!-- Opening screen -->
 <div id="opening-screen" aria-hidden="false">
@@ -24,11 +72,10 @@
 </div>
 
 <!-- Invitation content -->
-
 <div id="invitation-content" aria-hidden="true">
   <div class="particles"></div>
 
-  <!-- Música de fundo (edite o src do arquivo) -->
+  <!-- Música de fundo -->
   <audio id="bgMusic" loop preload="auto">
     <source src="casamento 1.mp3" type="audio/mpeg">
   </audio>
@@ -36,39 +83,36 @@
 
   <section class="hero">
 
-  <video autoplay muted loop playsinline>
-    <source src="videocasal1.mp4" type="video/mp4">
-  </video>
+    <video autoplay muted loop playsinline>
+      <source src="videocasal1.mp4" type="video/mp4">
+    </video>
 
+    <div class="overlay"></div>
 
-  <div class="overlay"></div>
+    <div class="hero-content">
+      <span class="subtitle">Insieme per sempre</span>
 
-  <div class="hero-content">
-    <span class="subtitle">Insieme per sempre</span>
+      <h1>Floricena</h1>
+      <h1><span class="amp">&amp;</span></h1>
+      <h1>Stefano</h1>
 
-    <h1>Floricena</h1>
-    <h1><span class="amp">&amp;</span></h1>
-    <h1>Stefano</h1>
+      <p class="date">10 ottobre 2026</p>
+      <p class="hero-time">Alle 12:30</p>
 
-    <p class="date">
-     10 ottobre 2026
-    </p>
-    <p class="hero-time">Alle 12:30</p>
+      <!-- Animação mandando scrollar -->
+      <div class="scroll-indicator">
+        <span>Scorri verso il basso</span>
+        <div class="scroll-arrow">↓</div>
+      </div>
 
-    <button class="btn" type="button" onclick="window.location.href='confimação.html'">Conferma la tua presenza</button>
-
-
-
-  </div>
+    </div>
 
   </section>
 
   <section class="countdown-section">
-
     <h2>Ne sono rimasti solo pochi</h2>
 
     <div class="countdown">
-
       <div>
         <span id="days">00</span>
         <p>Giorni</p>
@@ -88,20 +132,16 @@
         <span id="seconds">00</span>
         <p>Secondi</p>
       </div>
-
     </div>
-
   </section>
 
   <section class="timeline">
-
     <h2>Il nostro viaggio</h2>
 
     <div class="timeline-container">
-
       <div class="timeline-item">
         <h3>2023</h3>
-        <p> Ci conosciamo.</p>
+        <p>Ci conosciamo.</p>
       </div>
 
       <div class="timeline-item">
@@ -118,25 +158,19 @@
         <h3>2026</h3>
         <p>Il nostro grande giorno.</p>
       </div>
-
     </div>
-
   </section>
 
   <section class="story">
-
     <h2>La nostra storia</h2>
-
     <p>
-Quattro anni fa eravamo solo due sconosciuti al parco Iris di Padova, lei con il cane di sua sorella e lui al suo lavoro come di solito. 
-Dopo qualche passeggiata con il cane e alcuni veri e propri incontri romantici,
-eccoci qui! Speriamo che possiate unirvi a noi mentre la nostra storia d'amore continua nel prossimo capitolo di "Lo voglio!"
-
-
+      Quattro anni fa eravamo solo due sconosciuti al parco Iris di Padova, lei con il cane di sua sorella e lui al suo lavoro come di solito. 
+      Dopo qualche passeggiata con il cane e alcuni veri e propri incontri romantici,
+      eccoci qui! Speriamo che possiate unirvi a noi mentre la nostra storia d'amore continua nel prossimo capitolo di "Lo voglio!"
+    </p>
   </section>
 
   <section class="gallery">
-
     <h2>La nostra coppia</h2>
     <p>La parte migliore della vita inizia ora, al tuo fianco.</p>
 
@@ -154,28 +188,28 @@ eccoci qui! Speriamo che possiate unirvi a noi mentre la nostra storia d'amore c
         <img src="casal4.jpeg" alt="Foto do casal 4" loading="lazy">
       </figure>
     </div>
-
   </section>
 
   <section class="location">
-
     <h2>Luogo della cerimonia</h2>
-     <h1>Villa Bruna</h1>
+    <h1>Villa Bruna</h1>
     <p>Via Fratelli Bonotto, 24A - Mogliano Veneto (TV)</p>
 
     <button class="btn-outline" onclick="window.open('https://www.google.com/maps/search/?api=1&query=Via+Fratelli+Bonotto+24A+Mogliano+Veneto+TV', '_blank')">
       Visualizza posizione
     </button>
-
   </section>
 
+  <!-- Botão de Confirmação no Final -->
+  <section class="rsvp-section">
+    <h2>Presenza</h2>
+    <p>Saremo felicissimi di avervi con noi. Conferma la tua partecipazione!</p>
+    <button class="btn" type="button" onclick="window.location.href='confimação.html'">Conferma la tua presenza</button>
+  </section>
 
   <section class="footer">
-
     <h3>Non vediamo l'ora di celebrare con voi questa giornata indimenticabile. ❤️</h3>
-     
-    <p1>Con affetto, Floricena e Stefano</p1>
-
+    <p>Con affetto, Floricena e Stefano</p>
   </section>
 </div>
 
