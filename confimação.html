@@ -290,35 +290,7 @@
 
     .actions button { border: none; }
 
-    /* ======= TOAST ======= */
-    .toast {
-      display: none;
-      margin-top: 14px;
-      padding: 12px 14px;
-      border-radius: 14px;
-      background: rgba(212, 175, 55, 0.1);
-      color: var(--gold);
-      border: 1px solid var(--border-gold);
-      font-weight: 600;
-      text-align: center;
-      font-size: clamp(13px, 2vw, 14px);
-    }
-
-    .help {
-      margin-top: 12px;
-      font-size: clamp(11px, 1.8vw, 12.5px);
-      color: var(--text-muted);
-      text-align: center;
-      line-height: 1.5;
-      opacity: 0.8;
-    }
-
     /* ======= RESPONSIVO ======= */
-    @media (max-width: 1024px) {
-      body { padding: 20px; }
-      .modal { margin: 5vh auto; }
-    }
-
     @media (max-width: 900px) {
       .form-grid { grid-template-columns: 1fr; }
       .modal { padding: 20px; }
@@ -381,60 +353,57 @@
       <h2 id="rsvpTitle">Si prega di confermare la presenza</h2>
       <div class="modal-subtitle">📅 Conferma la presenza entro il 20 settembre!</div>
 
-      <div class="form-grid">
-        <div class="full">
-          <label for="nome">Nome e cognome</label>
-          <input id="nome" type="text" placeholder="Nome e cognome" autocomplete="name">
+      <form id="rsvpForm">
+        <div class="form-grid">
+          <div class="full">
+            <label for="nome">Nome e cognome</label>
+            <input id="nome" type="text" placeholder="Nome e cognome" autocomplete="name" required>
+          </div>
+
+          <div class="full">
+            <label for="telefone">Telefono</label>
+            <input id="telefone" type="text" placeholder="Telefono (opzionale)" autocomplete="tel">
+          </div>
+
+          <div>
+            <label for="presenca">Stai andando?</label>
+            <select id="presenca">
+              <option value="Sì">Sì</option>
+              <option value="No">No</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="acompanhantes">Compagni</label>
+            <input id="acompanhantes" type="number" min="0" value="0" placeholder="Numero di accompagnatori">
+          </div>
+
+          <div class="full">
+            <label for="nomesAcompanhantes">Nomi degli accompagnatori</label>
+            <textarea id="nomesAcompanhantes" placeholder="Nomi degli accompagnatori (se presenti)"></textarea>
+          </div>
+
+          <div class="full">
+            <label for="observacoes">Note</label>
+            <textarea id="observacoes" placeholder="Note (allergie, orari, ecc.)"></textarea>
+          </div>
         </div>
 
-        <div class="full">
-          <label for="telefone">Telefono</label>
-          <input id="telefone" type="text" placeholder="Telefono (opzionale)" autocomplete="tel">
+        <div class="actions">
+          <button class="btn btn-primary" type="submit" id="btnEnviar">Confermare</button>
+          <button class="btn btn-cancel" type="button" onclick="fecharModal()">Cancellare</button>
         </div>
-
-        <div>
-          <label for="presenca">Stai andando?</label>
-          <select id="presenca">
-            <option>Sì</option>
-            <option>No</option>
-          </select>
-        </div>
-
-        <div>
-          <label for="acompanhantes">Compagni</label>
-          <input id="acompanhantes" type="number" min="0" value="0" placeholder="Numero di accompagnatori">
-        </div>
-
-        <div class="full">
-          <label for="nomesAcompanhantes">Nomi degli accompagnatori</label>
-          <textarea id="nomesAcompanhantes" placeholder="Nomi degli accompagnatori (se presenti)"></textarea>
-        </div>
-
-        <div class="full">
-          <label for="obs">Note</label>
-          <textarea id="obs" placeholder="Note (allergie, orari, ecc.)"></textarea>
-        </div>
-      </div>
-
-      <div class="actions">
-        <button class="btn btn-primary" type="button" onclick="enviarWhatsapp()">Confermare</button>
-        <button class="btn btn-cancel" type="button" onclick="fecharModal()">Cancellare</button>
-      </div>
-
-      <div class="toast" id="toastOk">Messaggio copiato! Apertura del gruppo...</div>
-
-      <div class="help">
-        Il tuo messaggio verrà copiato automaticamente. Incollalo nel gruppo che si aprirà!
-      </div>
+      </form>
     </div>
   </div>
 
   <script>
-    // Link do Grupo do WhatsApp
-    const WA_GROUP_URL = 'https://chat.whatsapp.com/LSDBAESwD82Ik6J1IVHqm6';
+    // Cole a URL que você gerou na implantação do Google Apps Script aqui:
+    const URL_DO_GOOGLE_SCRIPT = "SUA_URL_DO_APPS_SCRIPT_AQUI";
+    // Link do seu grupo do WhatsApp:
+    const LINK_GRUPO_WHATSAPP = "https://chat.whatsapp.com/LSDBAESwD82Ik6J1IVHqm6";
 
     const modalEl = document.getElementById('rsvpModal');
-    const toastOkEl = document.getElementById('toastOk');
 
     function abrirModal() {
       if (!modalEl) return;
@@ -452,87 +421,6 @@
       modalEl.classList.remove('is-open');
       modalEl.setAttribute('aria-hidden', 'true');
       document.body.style.overflow = '';
-      if (toastOkEl) {
-        toastOkEl.style.display = 'none';
-      }
-    }
-
-    function getValue(id) {
-      const el = document.getElementById(id);
-      return (el && typeof el.value === 'string') ? el.value.trim() : (el ? String(el.value).trim() : '');
-    }
-
-    function getSelectValue(id) {
-      const el = document.getElementById(id);
-      return el ? String(el.value).trim() : '';
-    }
-
-    async function copiarTexto(texto) {
-      try {
-        if (navigator.clipboard && window.isSecureContext) {
-          await navigator.clipboard.writeText(texto);
-          return true;
-        } else {
-          // Fallback para navegadores mais antigos
-          const textarea = document.createElement('textarea');
-          textarea.value = texto;
-          textarea.style.position = 'fixed';
-          textarea.style.opacity = '0';
-          document.body.appendChild(textarea);
-          textarea.select();
-          const copiado = document.execCommand('copy');
-          document.body.removeChild(textarea);
-          return copiado;
-        }
-      } catch (err) {
-        console.error('Erro ao copiar:', err);
-        return false;
-      }
-    }
-
-    async function enviarWhatsapp() {
-      const nome = getValue('nome');
-      const telefone = getValue('telefone');
-      const presenca = getSelectValue('presenca');
-      const acompanhantes = (function() {
-        const el = document.getElementById('acompanhantes');
-        const n = el ? Number(el.value) : 0;
-        return Number.isFinite(n) ? n : 0;
-      })();
-      const nomesAcompanhantes = getValue('nomesAcompanhantes');
-      const obs = getValue('obs');
-
-      if (!nome) {
-        alert('Inserisci il tuo nome e cognome per confermare.');
-        const n = document.getElementById('nome');
-        if (n) n.focus();
-        return;
-      }
-
-      const msg = [
-        '📌 *Conferma di partecipazione:*',
-        '',
-        `👤 *Nome:* ${nome}`,
-        `📞 *Telefono:* ${telefone || '-'}`,
-        `✅ *Presenza:* ${presenca || '-'}`,
-        `👥 *Compagni:* ${acompanhantes}`,
-        `📝 *Nomi degli accompagnatori:* ${nomesAcompanhantes || '-'}`,
-        `💬 *Note:* ${obs || '-'}`
-      ].join('\n');
-
-      // Copia a mensagem formatada para a área de transferência
-      await copiarTexto(msg);
-
-      if (toastOkEl) {
-        toastOkEl.style.display = 'block';
-        toastOkEl.textContent = 'Messaggio copiato! Incollalo nel gruppo...';
-      }
-
-      // Abre o link do grupo e fecha o modal
-      setTimeout(() => {
-        window.open(WA_GROUP_URL, '_blank', 'noopener,noreferrer');
-        fecharModal();
-      }, 1000);
     }
 
     // Fechar ao clicar fora no overlay
@@ -543,6 +431,41 @@
     // Fechar com ESC
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') fecharModal();
+    });
+
+    // Envio do formulário via Fetch e Redirecionamento
+    document.getElementById("rsvpForm").addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const btn = document.getElementById("btnEnviar");
+      btn.disabled = true;
+      btn.innerText = "Invio in corso...";
+
+      const dados = {
+        nome: document.getElementById("nome").value,
+        telefone: document.getElementById("telefone").value,
+        presenca: document.getElementById("presenca").value,
+        acompanhantes: document.getElementById("acompanhantes").value,
+        nomesAcompanhantes: document.getElementById("nomesAcompanhantes").value,
+        observacoes: document.getElementById("observacoes").value
+      };
+
+      try {
+        // Envia os dados para a planilha nos bastidores
+        await fetch(URL_DO_GOOGLE_SCRIPT, {
+          method: "POST",
+          mode: "no-cors",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(dados)
+        });
+
+        // Redireciona para o grupo do WhatsApp imediatamente após salvar
+        window.location.href = LINK_GRUPO_WHATSAPP;
+      } catch (error) {
+        alert("Si è verificato un errore durante l'invio. Riprova.");
+        btn.disabled = false;
+        btn.innerText = "Confermare";
+      }
     });
   </script>
 </body>
