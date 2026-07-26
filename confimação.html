@@ -337,10 +337,7 @@
       opacity: 0.8;
     }
 
-    /* ============================================
-        RESPONSIVO — BREAKPOINTS
-        ============================================ */
-
+    /* ======= RESPONSIVO ======= */
     @media (max-width: 1024px) {
       body { padding: 20px; }
       .modal { margin: 5vh auto; }
@@ -358,16 +355,6 @@
       .form-grid { gap: 8px; }
       .actions { flex-direction: column; align-items: stretch; }
       .actions .btn { width: 100%; justify-content: center; }
-    }
-
-    @media (max-width: 600px) {
-      body { padding: 12px; }
-      .card { padding: 24px 16px; border-radius: 18px; }
-      .modal { padding: 14px; border-radius: 16px; margin: 2vh auto; }
-      .modal h2 { font-size: 22px; }
-      label { font-size: 13px; }
-      .help { font-size: 11px; }
-      .toast { font-size: 13px; }
     }
 
     @media (max-width: 480px) {
@@ -391,29 +378,6 @@
       }
       textarea { min-height: 72px; }
       .actions { gap: 10px; margin-top: 14px; }
-    }
-
-    @media (max-width: 380px) {
-      body { padding: 8px; }
-      .card { padding: 16px 10px; border-radius: 14px; }
-      .card h1 { font-size: 22px; }
-      .card p { font-size: 13px; line-height: 1.7; }
-      .btn { 
-        padding: 11px 18px; 
-        font-size: 13px; 
-      }
-      .modal { padding: 10px; }
-      .modal h2 { font-size: 18px; }
-      input, select, textarea { 
-        padding: 9px;
-        font-size: 13px;
-        border-radius: 10px;
-      }
-      label { font-size: 12px; }
-      .help { font-size: 10.5px; }
-      .toast { font-size: 12px; padding: 10px; }
-      .icon { font-size: 42px; }
-      .actions { gap: 8px; margin-top: 12px; }
     }
   </style>
 </head>
@@ -490,18 +454,17 @@
         <button class="btn btn-cancel" type="button" onclick="fecharModal()">Cancellare</button>
       </div>
 
-      <div class="toast" id="toastOk">Invio in corso...</div>
+      <div class="toast" id="toastOk">Messaggio copiato! Apertura del gruppo...</div>
 
       <div class="help">
-        Dopo la conferma, apriremo WhatsApp con il tuo messaggio già compilato.
+        Il tuo messaggio verrà copiato automaticamente. Incollalo nel gruppo che si aprirà!
       </div>
     </div>
   </div>
 
   <script>
-    // WhatsApp: telefone de destino recebido: +39 380 774 9633
-    const WHATSAPP_DEST = '393807749633';
-    const WA_ME_URL = `https://wa.me/${WHATSAPP_DEST}`;
+    // Link do Grupo do WhatsApp
+    const WA_GROUP_URL = 'https://chat.whatsapp.com/LSDBAESwD82Ik6J1IVHqm6';
 
     const modalEl = document.getElementById('rsvpModal');
     const toastOkEl = document.getElementById('toastOk');
@@ -537,7 +500,30 @@
       return el ? String(el.value).trim() : '';
     }
 
-    function enviarWhatsapp() {
+    async function copiarTexto(texto) {
+      try {
+        if (navigator.clipboard && window.isSecureContext) {
+          await navigator.clipboard.writeText(texto);
+          return true;
+        } else {
+          // Fallback para navegadores mais antigos
+          const textarea = document.createElement('textarea');
+          textarea.value = texto;
+          textarea.style.position = 'fixed';
+          textarea.style.opacity = '0';
+          document.body.appendChild(textarea);
+          textarea.select();
+          const copiado = document.execCommand('copy');
+          document.body.removeChild(textarea);
+          return copiado;
+        }
+      } catch (err) {
+        console.error('Erro ao copiar:', err);
+        return false;
+      }
+    }
+
+    async function enviarWhatsapp() {
       const nome = getValue('nome');
       const telefone = getValue('telefone');
       const presenca = getSelectValue('presenca');
@@ -557,25 +543,29 @@
       }
 
       const msg = [
-        'Conferma di partecipazione:',
+        '📌 *Conferma di partecipazione:*',
         '',
-        `Nome: ${nome}`,
-        `Telefono: ${telefone || '-'}`,
-        `Presenza: ${presenca || '-'}`,
-        `Compagni: ${acompanhantes}`,
-        `Nomi degli accompagnatori: ${nomesAcompanhantes || '-'}`,
-        `Note: ${obs || '-'}`
+        `👤 *Nome:* ${nome}`,
+        `📞 *Telefono:* ${telefone || '-'}`,
+        `✅ *Presenza:* ${presenca || '-'}`,
+        `👥 *Compagni:* ${acompanhantes}`,
+        `📝 *Nomi degli accompagnatori:* ${nomesAcompanhantes || '-'}`,
+        `💬 *Note:* ${obs || '-'}`
       ].join('\n');
 
-      const url = `${WA_ME_URL}?text=${encodeURIComponent(msg)}`;
+      // Copia a mensagem formatada para a área de transferência
+      await copiarTexto(msg);
 
       if (toastOkEl) {
         toastOkEl.style.display = 'block';
-        toastOkEl.textContent = 'Apertura di WhatsApp...';
+        toastOkEl.textContent = 'Messaggio copiato! Incollalo nel gruppo...';
       }
 
-      window.open(url, '_blank', 'noopener,noreferrer');
-      fecharModal();
+      // Abre o link do grupo e fecha o modal
+      setTimeout(() => {
+        window.open(WA_GROUP_URL, '_blank', 'noopener,noreferrer');
+        fecharModal();
+      }, 1000);
     }
 
     // Fechar ao clicar fora no overlay
