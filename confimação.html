@@ -473,6 +473,7 @@
           await navigator.clipboard.writeText(texto);
           return true;
         } else {
+          // Fallback para navegadores mais antigos
           const textarea = document.createElement('textarea');
           textarea.value = texto;
           textarea.style.position = 'fixed';
@@ -519,6 +520,7 @@
         `💬 *Note:* ${obs || '-'}`
       ].join('\n');
 
+      // Copia a mensagem formatada para a área de transferência
       await copiarTexto(msg);
 
       if (toastOkEl) {
@@ -526,6 +528,7 @@
         toastOkEl.textContent = 'Messaggio copiato! Incollalo nel gruppo...';
       }
 
+      // Abre o link do grupo e fecha o modal
       setTimeout(() => {
         window.open(WA_GROUP_URL, '_blank', 'noopener,noreferrer');
         fecharModal();
