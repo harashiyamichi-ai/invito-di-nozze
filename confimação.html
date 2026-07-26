@@ -398,8 +398,9 @@
   </div>
 
   <script>
-    // Cole a URL que você gerou na implantação do Google Apps Script aqui:
-    const URL_DO_GOOGLE_SCRIPT = "SUA_URL_DO_APPS_SCRIPT_AQUI";
+    // URL gerada na implantação do seu Google Apps Script:
+    const URL_DO_GOOGLE_SCRIPT = "https://script.google.com/macros/s/AKfycbymHPlOut_M-JvomBnml_lRecODJ6-NqAqiZMG6fzbyZCqPOgSN7RQTifPgZs7g1yk33Q/exec";
+    
     // Link do seu grupo do WhatsApp:
     const LINK_GRUPO_WHATSAPP = "https://chat.whatsapp.com/LSDBAESwD82Ik6J1IVHqm6";
 
@@ -433,7 +434,7 @@
       if (e.key === 'Escape') fecharModal();
     });
 
-    // Envio do formulário via Fetch e Redirecionamento
+    // Envio do formulário via Fetch para a planilha e Redirecionamento para o WhatsApp
     document.getElementById("rsvpForm").addEventListener("submit", async function (e) {
       e.preventDefault();
 
@@ -451,7 +452,7 @@
       };
 
       try {
-        // Envia os dados para a planilha nos bastidores
+        // Envia os dados para a planilha no Google Sheets nos bastidores
         await fetch(URL_DO_GOOGLE_SCRIPT, {
           method: "POST",
           mode: "no-cors",
@@ -459,7 +460,7 @@
           body: JSON.stringify(dados)
         });
 
-        // Redireciona para o grupo do WhatsApp imediatamente após salvar
+        // Redireciona para o grupo do WhatsApp
         window.location.href = LINK_GRUPO_WHATSAPP;
       } catch (error) {
         alert("Si è verificato un errore durante l'invio. Riprova.");
